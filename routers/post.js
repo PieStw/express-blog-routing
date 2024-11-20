@@ -31,6 +31,50 @@ router.get("/:id", (req, res) => {
 
 });
 
+router.post("/", (req, res) => {
+    const newPost = {id: 6, titolo: "Post1", immagine: "img/ciambellone.jpeg", contenuto: "Lorem ipsum", tags: ["sole", "mare"]}
+    res.json(newPost);
+});
+
+router.put("/:id", (req, res) => {
+
+    const {id} = req.params;
+
+    if(isNaN(id)){
+        res.status(400).json({ error: "Inserisci un numero" });
+    }
+
+    const postSelected = posts.find((post) => post.id === parseInt(id)) 
+    
+    if(postSelected){
+        postSelected.contenuto = "MODIFICATO PARZIALMENTE";
+        res.json(postSelected);
+    }
+    
+    else
+        res.status(404).json({ error: "Post non trovato" });
+
+});
+
+router.patch("/:id", (req, res) => {
+
+    const {id} = req.params;
+
+    if(isNaN(id)){
+        res.status(400).json({ error: "Inserisci un numero" });
+    }
+
+    const postSelected = posts.find((post) => post.id === parseInt(id)) 
+    
+    if(postSelected){
+        postSelected.contenuto = "MODIFICATO TOTALMENTE";
+        res.json(postSelected);
+    }
+    
+    else
+        res.status(404).json({ error: "Post non trovato" });
+
+});
 
 router.get("/", (req, res) => {
     res.send("Server del mio Blog");
