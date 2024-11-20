@@ -4,7 +4,7 @@ const port = 3000;
 
 app.use(express.static("public"));
 
-const post = require('./post.js');
+const post = require('./routers/post.js');
 app.use('/post', post);
 
 app.listen(port, () => {

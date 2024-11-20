@@ -10,21 +10,32 @@ const posts = [
 ];
 
 router.get("/", (req, res) => {
+    res.json(posts);
+});
+
+router.get("/:id", (req, res) => {
+
+    const {id} = req.params;
+
+    if(isNaN(id)){
+        res.status(400).json({ error: "Inserisci un numero" });
+    }
+
+    const postSelected = posts.find((post) => post.id === parseInt(id)) 
+    
+    if(postSelected)
+        res.json(postSelected);
+    
+    else
+        res.status(404).json({ error: "Post non trovato" });
+
+});
+
+
+router.get("/", (req, res) => {
     res.send("Server del mio Blog");
 });
 
-router.get("/bacheca", (req, res) => {
 
-    const tag = req.query.tag;
-
-    if(tag){
-        const newPosts = posts.filter((post) => {
-            return post.tags.includes(tag.toLowerCase())
-        })
-    
-        res.json({posts: newPosts, numeroElementi: newPosts.length});
-    }
-    else res.json({posts: posts, numeroElementi: posts.length});
-});
 
 module.exports = router;
