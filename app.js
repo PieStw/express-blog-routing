@@ -7,6 +7,10 @@ app.use(express.static("public"));
 const post = require('./routers/post.js');
 app.use('/post', post);
 
+app.get("/", (req, res) => {
+    res.send("Server del mio Blog");
+});
+
 app.listen(port, () => {
     console.log("Server online sulla porta: " + port);
 });
